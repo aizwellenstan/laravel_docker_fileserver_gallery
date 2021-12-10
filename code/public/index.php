@@ -2400,12 +2400,12 @@ var CodeMirror = {};
       white-space: pre-wrap;
     }
 
-    li {
+    /* li {
       height:78px;
       display: flex;
       flex-direction: row;
       align-items: center;
-    }
+    } */
 
     li:hover, li:active{
       background-color: #f05223;

@@ -4773,9 +4773,9 @@
                 r = "folder" + (e.is_readable ? e.is_link ? "_link" : "" : "_forbid");
             return a ? (n += " has-ul", m && m[e.path] && (n += " menu-li-open", p[e.path] = !0)) : e.is_readable || (o += " menu-a-forbidden"), '<li data-level="' + s + '" data-path="' + t(e.path) + '" class="' + n + '"><a href="' + l(e) + '" class="' + o + '">' 
             // + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-toggle", "plus", "minus") : "") + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-folder menu-icon-folder-toggle", r, "folder_plus", "folder_minus") : P.get_svg_icon_class(r, "menu-icon menu-icon-folder")) 
-            + '<span class="menu-text">'
+            + '<div class="menu-text">'
             + i(e.basename) 
-            + '</span>'
+            + '</div>'
             + "</a>"
         }
 
