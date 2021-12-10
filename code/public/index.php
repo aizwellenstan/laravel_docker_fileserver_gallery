@@ -2106,6 +2106,8 @@ header('files-msg: [' . header_memory_time() . ']');
   </head>
 
   <body class="body-loading"><svg viewBox="0 0 18 18" class="svg-preloader svg-preloader-active preloader-body"><circle cx="9" cy="9" r="8" pathLength="100" class="svg-preloader-circle"></svg>
+  <img class="banner" src ="/_files/assets/images/LIFE_Graudation_banner_4.png" height="160px" width="100%">
+  
   <!-- <form action="/" method="post">   -->
   <form>  
   <main id="main">
@@ -2117,7 +2119,7 @@ header('files-msg: [' . header_memory_time() . ']');
       ?>
       
       <nav id="topbar"<?php if(!empty($topbar_classes)) echo ' class="' . join(' ', $topbar_classes) . '"'; ?>>
-      <img class="banner" src ="/_files/assets/images/LIFE_Graudation_banner_4.png" height="160px" width="100%">
+      
         <div id="topbar-top" style="display:none;">
           <div id="search-container"><input id="search" type="search" placeholder="search" size="1" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" disabled></div>
           <div id="change-layout" class="dropdown"></div>
@@ -2145,8 +2147,8 @@ header('files-msg: [' . header_memory_time() . ']');
     <aside id="sidebar">
       <button id="sidebar-toggle" type="button" class="btn-icon"></button>
       <div id="sidebar-inner">
-        <img src="/_files/assets/images/orange.png" height="160px">
-        <div id="sidebar-topbar"></div>
+        <img src="/_files/assets/images/orange.png" height="160px" style="opacity: 0;">
+        <!-- <div id="sidebar-topbar"></div> -->
         <div id="sidebar-menu"></div>
       </div>
     </aside>
@@ -2383,6 +2385,19 @@ var CodeMirror = {};
       function onDownloadComplete () {}
     </script>
   </body>
+  <style>
+    #sidebar-menu{
+      background: white;
+    }
+
+    .menu-text {
+      color: #F05223 !important;
+    }
+
+    ul.version li:nth-child(odd) {
+background: #EEE;
+}
+  </style>
 </html>
 <?php }}
 // htmlend
