@@ -2406,11 +2406,7 @@ var CodeMirror = {};
       flex-direction: row;
       align-items: center;
     }
-
-    a.wide {
-      display:flex;
-    }
-
+    
     li:hover, li:active{
       background-color: #f05223;
       color: white;
