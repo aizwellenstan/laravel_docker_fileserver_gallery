@@ -2401,15 +2401,15 @@ var CodeMirror = {};
     }
 
     li {
-      height:78px;
+      /* height:78px;
       display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: center; */
     }
 
     a.wide {
       display:flex;
-  }
+    }
 
     li:hover, li:active{
       background-color: #f05223;
