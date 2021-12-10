@@ -2400,6 +2400,10 @@ var CodeMirror = {};
       white-space: pre-wrap;
     }
 
+    li {
+      height:78px;
+    }
+
     li:hover{
       background-color: #f05223;
       color: white;
