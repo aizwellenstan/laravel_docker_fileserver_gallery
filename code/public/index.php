@@ -2392,19 +2392,11 @@ var CodeMirror = {};
 
     .menu-text {
       color: #f05223;
-      font-weight: bold;
+      /* font-weight: bold; */
+      font-weight: 800;
       word-wrap: break-word;     
       white-space: -moz-pre-wrap; 
       white-space: pre-wrap;
-    }
-
-    ul {
-        display: table-cell;
-    }
-
-    li {
-        height: 50px;
-        display: table-row;
     }
 
     li:hover{
