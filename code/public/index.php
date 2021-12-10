@@ -2409,7 +2409,7 @@ var CodeMirror = {};
       color: white!important;
     }
 
-    ul :nth-child(even){
+    ul:nth-child(even){
       background-color: #e5e5e5;
       
     }
