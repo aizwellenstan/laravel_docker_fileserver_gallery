@@ -2106,11 +2106,12 @@ header('files-msg: [' . header_memory_time() . ']');
   </head>
 
   <body class="body-loading"><svg viewBox="0 0 18 18" class="svg-preloader svg-preloader-active preloader-body"><circle cx="9" cy="9" r="8" pathLength="100" class="svg-preloader-circle"></svg>
-  <img class="banner" src ="/_files/assets/images/LIFE_Graudation_banner_4.png" height="160px" width="100%">
+  <img class="banner" src ="/_files/assets/images/LIFE_Graudation_banner_4.png">
+  <!-- <img src ="/_files/assets/images/LIFE_Graudation_banner_4.png" > -->
   
   <!-- <form action="/" method="post">   -->
   <form>  
-  <main id="main">
+  <main id="main" style="position:relative;top:160px;">
     
       <?php
       $topbar_classes = array();
@@ -2416,6 +2417,14 @@ var CodeMirror = {};
 
     li:nth-child(odd)>li{
       background-color: white;
+    }
+
+    .banner {
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 160px;
     }
 
     .btn-009889 {
