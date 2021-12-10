@@ -2401,9 +2401,10 @@ var CodeMirror = {};
     }
 
     li {
-      display: flex;
+      height:78px;
+      /* display: flex;
       flex-direction: row;
-      align-items: center;
+      align-items: center; */
     }
 
     li:hover, li:active{
