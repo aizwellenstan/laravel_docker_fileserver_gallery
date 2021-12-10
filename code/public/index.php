@@ -2174,7 +2174,7 @@ header('files-msg: [' . header_memory_time() . ']');
         bottom: 0;
         width: 100%;
         height: 60px;
-        background-color: #E5E5E5;
+        background-color: #e5e5e5;
         color: white;
         text-align: center;
         z-index: 2147483648;
@@ -2391,21 +2391,45 @@ var CodeMirror = {};
     }
 
     .menu-text {
-      color: #F05223 !important;
+      color: #f05223;
       font-weight: bold;
-      word-wrap: break-word;      /* IE 5.5-7 */
-      white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
-      white-space: pre-wrap;      /* current browsers */
+      word-wrap: break-word;     
+      white-space: -moz-pre-wrap; 
+      white-space: pre-wrap;
     }
 
-    ul.version li:nth-child(odd) {
-      background: #EEE;
+    ul {
+        display: table-cell;
     }
 
-    .menu-li {
-      /* height:100px; */
+    li {
+        height: 50px;
+        display: table-row;
+    }
+
+    li:hover{
+      background-color: #f05223;
+      color: white;
+    }
+
+    li:hover>a>.menu-text{
+      background-color: #f05223;
+      color: white!important;
+    }
+
+    ul :nth-child(even){
+      background-color: #e5e5e5;
+      
+    }
+    
+
+    ul:nth-child(odd) {
+      background-color: white;
+    }
+
+    /* .menu-li {
       list-style-position: inside;
-    }
+    } */
   </style>
 </html>
 <?php }}
