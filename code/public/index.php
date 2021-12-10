@@ -2403,7 +2403,7 @@ var CodeMirror = {};
     li {
       height:78px;
       display: flex;
-      flex-direction: row;
+      /* flex-direction: row; */
       align-items: center;
     }
 
