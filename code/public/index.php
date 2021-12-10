@@ -2402,8 +2402,8 @@ var CodeMirror = {};
 
     li {
       height:78px;
-      display: flex;
-      /* flex-direction: row; */
+      /* display: flex; */
+      flex-direction: row;
       align-items: center;
     }
 
