@@ -2407,7 +2407,7 @@ var CodeMirror = {};
       align-items: center;
     }
 
-    li:hover{
+    li:hover, li:active{
       background-color: #f05223;
       color: white;
     }
