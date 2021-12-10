@@ -910,7 +910,7 @@
             var e = function() {
                     if (!U.download || !_c.download_dir || "files" === _c.download_dir && !U.is_pointer) return !1;
                     var t = "files" === _c.download_dir;
-                    N.topbar_breadcrumbs.insertAdjacentHTML("afterbegin", "<" + (t ? "button" : 'a href="#" target="_blank"') + " style=\"display:none;--tooltip-append:' " + (t ? X.get("files") : "zip") + '\'" class="download-dir tooltip-left"' + _("download", !0) + (t ? "" : " download") + ">" + P.get_svg_icon("tray_arrow_down") + "</" + (t ? "button" : "a") + ">");
+                    N.topbar_breadcrumbs.insertAdjacentHTML("afterbegin", "<" + (t ? "button" : 'a href="#" target="_blank"') + " style=\"display:none;--tooltip-append:' " + (t ? X.get("files") : "zip") + '\'" class="download-dir tooltip-left"' + _("download", !0) + (t ? "" : " download") + ">" + P.get_svg_icon("tray_arrow_down") +" Download Folder" +"</" + (t ? "button" : "a") + ">");
                     var i = N.topbar_breadcrumbs.firstElementChild;
                     return y(i, (function(t) {
                         if (!G) return t.preventDefault(), te.fire();
