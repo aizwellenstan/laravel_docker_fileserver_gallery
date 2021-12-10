@@ -2392,6 +2392,7 @@ var CodeMirror = {};
 
     .menu-text {
       color: #F05223 !important;
+      font-weight: bold;
     }
 
     ul.version li:nth-child(odd) {
