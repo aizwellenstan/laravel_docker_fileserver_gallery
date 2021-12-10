@@ -2400,6 +2400,17 @@ var CodeMirror = {};
       white-space: pre-wrap;
     }
 
+    li {
+      height:78px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    a.wide {
+      display:flex;
+  }
+
     li:hover, li:active{
       background-color: #f05223;
       color: white;
