@@ -2182,7 +2182,7 @@ header('files-msg: [' . header_memory_time() . ']');
       </style>
 
       <div class="footer">
-        <button type="submit" class="btn btn-primary right-buttom-corrner hide" id="selectedDownload"><i class="fa fa-archive"></i>Download</button>
+        <button type="submit" class="btn btn-009889 right-buttom-corrner hide" id="selectedDownload"><i class="fa fa-archive"></i>Download</button>
       </div>
     </form>
 
@@ -2416,6 +2416,12 @@ var CodeMirror = {};
 
     li:nth-child(odd)>li{
       background-color: white;
+    }
+
+    .btn-009889 {
+      background-color: #009889;
+      color: white;
+      font-weight: bold;
     }
 
     /* .menu-li {
