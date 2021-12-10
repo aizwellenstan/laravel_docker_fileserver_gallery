@@ -2393,11 +2393,19 @@ var CodeMirror = {};
     .menu-text {
       color: #F05223 !important;
       font-weight: bold;
+      word-wrap: break-word;      /* IE 5.5-7 */
+      white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
+      white-space: pre-wrap;      /* current browsers */
     }
 
     ul.version li:nth-child(odd) {
-background: #EEE;
-}
+      background: #EEE;
+    }
+
+    .menu-li {
+      /* height:100px; */
+      list-style-position: inside;
+    }
   </style>
 </html>
 <?php }}
