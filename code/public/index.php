@@ -2409,13 +2409,12 @@ var CodeMirror = {};
       color: white!important;
     }
 
-    ul:nth-child(even){
+    li:nth-child(even){
       background-color: #e5e5e5;
-      
     }
     
 
-    ul:nth-child(odd) {
+    li:nth-child(odd)>li{
       background-color: white;
     }
 
