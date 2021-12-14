@@ -32,7 +32,7 @@ class config {
     'image_resize_dimensions' => 320,
     'image_resize_dimensions_retina' => 480,
     'image_resize_dimensions_allowed' => '', // comma-separated list of allowed resize dimensions
-    'image_resize_types' => 'jpeg, png, gif, webp, bmp', // image types to resize / jpeg, png, gif, webp, bmp
+    'image_resize_types' => 'jpeg, png, gif, webp, bmp, jpg', // image types to resize / jpeg, png, gif, webp, bmp
     'image_resize_quality' => 85,
     'image_resize_function' => 'imagecopyresampled', // imagecopyresampled / imagecopyresized
     'image_resize_sharpen' => true,
@@ -389,10 +389,8 @@ function check_login($is_doc){
 
   // not logged in
   if(!$is_logged_in){
-
     // login only on html pages
     if($is_doc){
-
       // vars
       $sidx = md5(session_id());
       $is_login_attempt = isset($_POST['fusername']) && isset($_POST['fpassword']) && isset($_POST['client_hash']) && isset($_POST['sidx']);
@@ -405,7 +403,8 @@ function check_login($is_doc){
         $_POST['sidx'] === $sidx
       ){
         $_SESSION['login'] = $login_hash;
-
+        $newURL = '/?Associate%20Degrees%20and%20Higher%20Diploma%20of%20Art%20%20Programme';
+        header('Location: '.$newURL);
       // display login page and exit
       } else {
         login_page($is_login_attempt, $sidx, $is_logout, $client_hash);
@@ -509,7 +508,7 @@ function is_exclude($path = false, $is_dir = true, $symlinked = false){
   if(!$path || $path === config::$root) return;
 
   // exclude all paths that start with /_files* (reserved for any files and folders to be ignored and hidden from Files app)
-  if(strpos($path, '/_files') !== false) return true;
+  if(strpos($path, './_files') !== false) return true;
 
   // exclude files PHP application
   if($path === config::$__file__) return true;
@@ -696,6 +695,9 @@ function resize_image($path, $resize_dimensions, $clone = false){
   $resize_width  = round($info[0] / $resize_ratio);
   $resize_height = round($info[1] / $resize_ratio);
 
+  $maxWidth = 480;
+  $maxHeight = 320;
+
   // memory
   $memory_limit = config::$config['image_resize_memory_limit'] && function_exists('ini_get') ? (int) @ini_get('memory_limit') : false;
   if($memory_limit && $memory_limit > -1){
@@ -713,9 +715,26 @@ function resize_image($path, $resize_dimensions, $clone = false){
   $image = image_create_from($path, $info[2]);
   if(!$image) error('Failed to create image resource.', 500);
 
-  // Create final image with new dimensions.
-  $new_image = imagecreatetruecolor($resize_width, $resize_height);
-  if(!call_user_func(config::$config['image_resize_function'], $new_image, $image, 0, 0, 0, 0, $resize_width, $resize_height, $info[0], $info[1])) error('Failed to resize image.', 500);
+
+  if ($resize_width < $resize_height) {
+    $new_image = imagecreatetruecolor($maxWidth, $maxHeight);//create the background 130x130
+    $whiteBackground = imagecolorallocate($new_image, 0, 0, 0); 
+    imagefill($new_image,0,0,$whiteBackground); // fill the background with white
+
+    // imagecopyresized($small_image, $new_image, 0, 0, 0, 0, $maxWidth/1.5, $maxHeight, $info[0], $info[1]);
+
+    imagecopyresampled($new_image, $image, ($maxWidth - $resize_width)/2, ($maxHeight - $resize_height) / 2,0,0, $resize_width , $resize_height, $info[0], $info[1]); // copy the image to the background
+    // imagecopyresampled($new_image, $small_image, 0, ($maxHeight - $resize_height) / 2, 0, 0, $resize_width , $resize_height, $resize_width, $resize_height); // copy the image to the background
+
+    // imagecopyresized($small_image, $image, 0, 0, 0, 0, $maxWidth/1.5, $maxHeight, $info[0], $info[1]);
+    // imagecopyresampled($new_image, $small_image,, 0, ($maxHeight - $resize_height) / 2, 0, 0, $resize_width , $resize_height, $resize_width, $resize_height,  $info[0], $info[1]); // copy the image to the background
+  } else {
+    // Create final image with new dimensions.
+    $new_image = imagecreatetruecolor($resize_width, $resize_height);
+    if(!call_user_func(config::$config['image_resize_function'], $new_image, $image, 0, 0, 0, 0, $resize_width, $resize_height, $info[0], $info[1])) error('Failed to resize image.', 500);
+  }
+
+  
 
   // destroy original $image resource
   imagedestroy($image);
@@ -1559,8 +1578,9 @@ if(post('action')){
   
 
     if (get('files')){
-        $zip_file_name = 'tmp' . '.zip';
-        $zip_file = config::$storage_path . '/zip/' . $zip_file_name;
+          if(!is_writable($dir)) error('Dir ' . basename($dir) . ' is not writeable.', 500); 
+          $zip_file_name = '_files.zip';
+          $zip_file = $dir . '/' . $zip_file_name;
           // use shell zip command instead / probably faster and more robust than PHP / if use, comment out PHP ZipArchive method starting below
           // exec('zip ' . $zip_file . ' ' . $dir . '/*.* -j -x _files*', $out, $res);
 
@@ -1604,14 +1624,6 @@ if(post('action')){
 
           // make sure created zip file exists / just in case
           if(!file_exists($zip_file)) error('Zip file ' . $zip_file_name . ' does not exist.', 500);
-        
-
-        // redirect instead of readfile() / might be useful if readfile() fails and/or for caching and performance
-        /*$zip_url = get_url_path($zip_file);
-        if($zip_url){
-          header('Location:' . $zip_url . '?' . filemtime($dir), true, 302);
-          exit;
-        }*/
 
         // output headers
         if(config::$has_login) {
@@ -1719,7 +1731,8 @@ if(post('action')){
         if(!readfile($zip_file)) error('Failed to readfile(' . $zip_file_name . ').', 500);
 
         // delete temp zip file if cache disable
-        if(empty(config::$config['download_dir_cache'])) @unlink($zip_file);
+        // if(empty(config::$config['download_dir_cache'])) @unlink($zip_file);
+        @unlink($zip_file);
     }
     
     
@@ -1826,11 +1839,6 @@ if(post('action')){
         $_POST["download_dir_zip"] and $_POST["download_dir_zip"] != "" and
         $_POST["files"] and $_POST["files"] != ""
       ) {
-        // new config();
-
-        // check download_dir enabled
-        // if(config::$config['download_dir'] !== 'zip') error('<strong>download_dir</strong> Zip disabled.', 403);
-
         $dirPath = strval($_POST["download_dir_zip"]);
 
         $rootPath = '/var/www/html/public/';
@@ -1840,32 +1848,10 @@ if(post('action')){
         if(!$dir) error('Invalid download path <strong>' .  $dirPath . '</strong>', 404);
         $dir = real_path($dir); // in case of symlink path
 
-        // create zip cache directly in dir (recommended, so that dir can be renamed while zip cache remains)
-        // if(!config::$storage_path || config::$config['download_dir_cache'] === 'dir') {
-        //     if(!is_writable($dir)) error('Dir ' . basename($dir) . ' is not writeable.', 500); 
-        //     $zip_file_name = '_files.zip';
-        //     $zip_file = $dir . '/' . $zip_file_name;
-
-        // // create zip file in storage _files/zip/$dirname.$md5.zip / 
-        // } else {
-        //     mkdir_or_error(config::$storage_path . '/zip');
-        //     $zip_file_name = basename($dir) . '.' . substr(md5($dir), 0, 6) . '.zip';
-        //     $zip_file = config::$storage_path . '/zip/' . $zip_file_name;
-        // }
-
         $config_storage_path = '/var/www/html/public/_files';
 
         $zip_file_name = basename($dir) . '.' . substr(md5($dir), 0, 6) . '.zip';
         $zip_file = $config_storage_path. '/zip/' . $zip_file_name;
-
-        // cached / download_dir_cache && file_exists() && zip is not older than dir time
-        // $cached = !empty(config::$config['download_dir_cache']) && file_exists($zip_file) && filemtime($zip_file) >= filemtime($dir);
-
-        // create zip if !cached
-        // if(!$cached){
-
-            // use shell zip command instead / probably faster and more robust than PHP / if use, comment out PHP ZipArchive method starting below
-            // exec('zip ' . $zip_file . ' ' . $dir . '/*.* -j -x _files*', $out, $res);
 
             // check that ZipArchive class exists
             if(!class_exists('ZipArchive')) error('Missing PHP ZipArchive class.', 500); 
@@ -1904,24 +1890,6 @@ if(post('action')){
 
             // make sure created zip file exists / just in case
             if(!file_exists($zip_file)) error('Zip file ' . $zip_file_name . ' does not exist.', 500);
-        // }
-
-        // redirect instead of readfile() / might be useful if readfile() fails and/or for caching and performance
-        /*$zip_url = get_url_path($zip_file);
-        if($zip_url){
-            header('Location:' . $zip_url . '?' . filemtime($dir), true, 302);
-            exit;
-        }*/
-
-        // output headers
-        // if(config::$has_login) {
-        //     header('cache-control: must-revalidate, post-check=0, pre-check=0');
-        //     header('cache-control: public');
-        //     header('expires: 0');
-        //     header('pragma: public');
-        // } else {
-        //     set_cache_headers();
-        // }
         header('cache-control: must-revalidate, post-check=0, pre-check=0');
         header('cache-control: public');
         header('expires: 0');
@@ -2102,16 +2070,14 @@ header('files-msg: [' . header_memory_time() . ']');
     <?php get_include('include/head.html'); ?>
     <link href="<?php echo config::$assets ?>css/files.css" rel="stylesheet">
     <?php get_include('css/custom.css'); ?>
-    <link href="/_files/assets/css/app.css" rel="stylesheet">
+    <link href="./_files/assets/css/app.css" rel="stylesheet">
   </head>
 
   <body class="body-loading"><svg viewBox="0 0 18 18" class="svg-preloader svg-preloader-active preloader-body"><circle cx="9" cy="9" r="8" pathLength="100" class="svg-preloader-circle"></svg>
-  <img class="banner" src ="/_files/assets/images/LIFE_Graudation_banner_4.png">
-  <!-- <img src ="/_files/assets/images/LIFE_Graudation_banner_4.png" > -->
-  
+  <img class="banner" src ="./_files/assets/images/LIFE_Graudation_banner_4.png" height="160px" width="100%">
   <!-- <form action="/" method="post">   -->
   <form>  
-  <main id="main" style="position:relative;top:160px;">
+  <main id="main">
     
       <?php
       $topbar_classes = array();
@@ -2120,7 +2086,6 @@ header('files-msg: [' . header_memory_time() . ']');
       ?>
       
       <nav id="topbar"<?php if(!empty($topbar_classes)) echo ' class="' . join(' ', $topbar_classes) . '"'; ?>>
-      
         <div id="topbar-top" style="display:none;">
           <div id="search-container"><input id="search" type="search" placeholder="search" size="1" spellcheck="false" autocomplete="off" autocorrect="off" autocapitalize="off" disabled></div>
           <div id="change-layout" class="dropdown"></div>
@@ -2148,8 +2113,8 @@ header('files-msg: [' . header_memory_time() . ']');
     <aside id="sidebar">
       <button id="sidebar-toggle" type="button" class="btn-icon"></button>
       <div id="sidebar-inner">
-        <img src="/_files/assets/images/orange.png" height="160px" style="opacity: 0;">
-        <!-- <div id="sidebar-topbar"></div> -->
+        <img src="./_files/assets/images/orange.png" height="160px" style="opacity:0">
+        <div id="sidebar-topbar"></div>
         <div id="sidebar-menu"></div>
       </div>
     </aside>
@@ -2165,23 +2130,7 @@ header('files-msg: [' . header_memory_time() . ']');
 
     <!-- custom footer html -->
     <?php get_include('include/footer.html'); ?>
-    <div class="footer" height="100px" width="100%">
-      <!-- <button type="submit" class="btn btn-primary right-buttom-corrner hide"><i class="fa fa-archive"></i>Download</button> -->
     </div>
-    <style>
-      .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        height: 60px;
-        background-color: #e5e5e5;
-        color: white;
-        text-align: center;
-        z-index: 2147483648;
-      }
-      </style>
-
       <div class="footer">
         <button type="submit" class="btn btn-009889 right-buttom-corrner hide" id="selectedDownload"><i class="fa fa-archive"></i>Download</button>
       </div>
@@ -2211,11 +2160,11 @@ var CodeMirror = {};
     <?php get_include('js/custom.js'); ?>
     <!-- files -->
     <!-- <script src="<?php echo config::$assets ?>js/files.js"></script> -->
-    <script src="_files/assets/js/files.js"></script>
+    <script src="./_files/assets/js/files.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
       // document.getElementsByTagName('form')[0].addEventListener('submit', function(){
-      //   this.action = '/';
+      //   this.action = '<?php echo isset($_GET['logout']) ? strtok($_SERVER['REQUEST_URI'], '?') : $_SERVER['REQUEST_URI']; ?>';
       //   this.method = 'post';
       // }, false);
 
@@ -2385,66 +2334,12 @@ var CodeMirror = {};
 
       function onDownloadComplete () {}
     </script>
+    <style>
+      .files-img-placeholder{
+        max-height: 320px;
+      }
+      </style>
   </body>
-  <style>
-    #sidebar-menu{
-      background: white;
-    }
-
-    .menu-text {
-      color: #f05223;
-      /* font-weight: bold; */
-      font-weight: 800;
-      word-wrap: break-word;     
-      white-space: -moz-pre-wrap; 
-      white-space: pre-wrap;
-    }
-
-    li {
-      height:78px;
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-    
-    li:hover, li:active{
-      background-color: #f05223;
-      color: white;
-    }
-
-    li:hover>a>.menu-text{
-      background-color: #f05223;
-      color: white!important;
-    }
-
-    li:nth-child(even){
-      background-color: #e5e5e5;
-    }
-    
-
-    li:nth-child(odd)>li{
-      background-color: white;
-    }
-
-    .banner {
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 160px;
-        z-index: 1;
-    }
-
-    .btn-009889 {
-      background-color: #009889;
-      color: white;
-      font-weight: bold;
-    }
-
-    /* .menu-li {
-      list-style-position: inside;
-    } */
-  </style>
 </html>
 <?php }}
 // htmlend

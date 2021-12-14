@@ -910,7 +910,7 @@
             var e = function() {
                     if (!U.download || !_c.download_dir || "files" === _c.download_dir && !U.is_pointer) return !1;
                     var t = "files" === _c.download_dir;
-                    N.topbar_breadcrumbs.insertAdjacentHTML("afterbegin", "<" + (t ? "button" : 'a href="#" target="_blank"') + " style=\"display:none;--tooltip-append:' " + (t ? X.get("files") : "zip") + '\'" class="download-dir tooltip-left"' + _("download", !0) + (t ? "" : " download") + ">" + P.get_svg_icon("tray_arrow_down") +" Download Folder" +"</" + (t ? "button" : "a") + ">");
+                    N.topbar_breadcrumbs.insertAdjacentHTML("afterbegin", "<" + (t ? "button" : 'a href="#" target="_blank"') + " style=\"display:none;--tooltip-append:' " + (t ? X.get("files") : "zip") + '\'" class="download-dir tooltip-left"' + _("download", !0) + (t ? "" : " download") + ">" + P.get_svg_icon("tray_arrow_down") + "</" + (t ? "button" : "a") + ">");
                     var i = N.topbar_breadcrumbs.firstElementChild;
                     return y(i, (function(t) {
                         if (!G) return t.preventDefault(), te.fire();
@@ -1687,7 +1687,7 @@
                     }
                     e.features = t
                 }(c), c.DateTimeOriginal && (c.mtime = c.DateTimeOriginal), 
-                '<div>'
+                '<div class="file-grid">'
                 +'<a href="' + l(c, "download" === _c.click) + 
                 '" target="_blank" class="files-a files-a-' 
                 + (d ? "img" : "svg") 
@@ -1711,8 +1711,8 @@
                 + f("menu" !== _c.click || c.is_dir, "files-context") + D(c) 
                 + "</a>"
                 // + '<input type="checkbox" name="fileId[]" class="custom-control-input" id="checkbox" value=""></input>'
-                // + '<input type="checkbox" class="custom-control-input hide" id="checkbox" value="'+l(c, "download" === _c.click)+'" onclick=selectFile(this)'
-                // + '></input>'
+                + '<input type="checkbox" class="custom-control-input hide" id="checkbox" value="'+l(c, "download" === _c.click)+'" onclick=selectFile(this)'
+                + '></input>'
                 + '</div>'
             }))
         }
@@ -4771,12 +4771,7 @@
                 o = "menu-a",
                 s = e.path ? (e.path.match(/\//g) || []).length + 1 : 0,
                 r = "folder" + (e.is_readable ? e.is_link ? "_link" : "" : "_forbid");
-            return a ? (n += " has-ul", m && m[e.path] && (n += " menu-li-open", p[e.path] = !0)) : e.is_readable || (o += " menu-a-forbidden"), '<li data-level="' + s + '" data-path="' + t(e.path) + '" class="' + n + '"><a href="' + l(e) + '" class="' + o + '">' 
-            // + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-toggle", "plus", "minus") : "") + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-folder menu-icon-folder-toggle", r, "folder_plus", "folder_minus") : P.get_svg_icon_class(r, "menu-icon menu-icon-folder")) 
-            + '<span class="menu-text">'
-            + i(e.basename) 
-            + '</span>'
-            + "</a>"
+            return a ? (n += " has-ul", m && m[e.path] && (n += " menu-li-open", p[e.path] = !0)) : e.is_readable || (o += " menu-a-forbidden"), '<li data-level="' + s + '" data-path="' + t(e.path) + '" class="' + n + '"><a href="' + l(e) + '" class="' + o + '">' + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-toggle", "plus", "minus") : "") + (a ? P.get_svg_icon_multi_class("menu-icon menu-icon-folder menu-icon-folder-toggle", r, "folder_plus", "folder_minus") : P.get_svg_icon_class(r, "menu-icon menu-icon-folder")) + i(e.basename) + "</a>"
         }
 
         function A(t, i) {
