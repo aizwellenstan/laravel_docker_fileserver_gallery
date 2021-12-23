@@ -474,7 +474,7 @@
                     var e = V("lang_menu", !0) || _c.lang_menu;
                     if (e && "false" != e && "0" != e) {
                         N.topbar_top.insertAdjacentHTML("beforeend", '<div id="change-lang" class="dropdown' + (t ? " dropdown-lang-loading" : "") + '"><button type="button" class="btn-icon btn-topbar btn-lang" data-text="' + g + '"></button><div class="dropdown-menu dropdown-menu-topbar dropdown-menu-left"><h6 class="dropdown-header" data-lang="language">' + r.get("language") + '</h6><div class="dropdown-lang-items">' + M(n, (function(e) {
-                            return '<button class="dropdown-item-lang' + (e === g ? " dropdown-lang-active" : "") + '" data-action="' + e + '"><img src="https://cdn.jsdelivr.net/npm/flag-icon-css@4.1.5/flags/1x1/' + (l[e] || e) + '.svg" class="dropdown-lang-flag"></button>'
+                            return '<button class="dropdown-item-lang' + (e === g ? " dropdown-lang-active" : "") + '" data-action="' + e + '"><img src="./_files/assets/js/lib/npm/flag-icon-css@4.1.5/flags/1x1/' + (l[e] || e) + '.svg" class="dropdown-lang-flag"></button>'
                         })) + "</div></div>");
                         var a = (i = N.topbar_top.lastElementChild).firstElementChild,
                             o = i.lastElementChild.lastElementChild,
@@ -491,7 +491,7 @@
             var t = a[e] || E.get_json("files:lang:" + e);
             return t ? m(t, e) : function(e) {
                 d(!0), I({
-                    url: V("local") ? "lang/" + e + ".json" : "https://cdn.jsdelivr.net/npm/files.photo.gallery@" + _c.version + "/lang/" + e + ".json",
+                    url: V("local") ? "lang/" + e + ".json" : "./_files/assets/js/lib/npm/files.photo.gallery@" + _c.version + "/lang/" + e + ".json",
                     json_response: !0,
                     complete: function(t, i, a) {
                         d(), t && i && a && (E.set("files:lang:" + e, i), m(t, e))
@@ -530,7 +530,7 @@
         return "en" === g ? e(s, "en") : c(g), r
     }();
     ! function() {
-        var e = "https://cdn.jsdelivr.net/npm/",
+        var e = "./_files/assets/js/lib/npm/",
             t = "codemirror@5.63.3",
             i = "headroom.js@0.12.0",
             a = "mousetrap@1.6.5",
@@ -2181,7 +2181,7 @@
                 if (i && a && n && i.hasOwnProperty("success")) {
                     var o = i.success;
                     if (z(o ? "New version " + o + " available." : "Already using latest version " + _c.version), o) {
-                        _id("change-sort").insertAdjacentHTML("afterend", '<div id="files-notifications" class="dropdown"><button type="button" class="btn-icon btn-topbar">' + P.get_svg_icon("bell") + '</button><div class="dropdown-menu dropdown-menu-topbar"><h6 class="dropdown-header">Files ' + o + "</h6>" + (i.writeable ? '<button class="dropdown-item">' + P.get_svg_icon("rotate_right") + '<span class="dropdown-text" data-lang="update">' + X.get("update") + "</span></button>" : "") + (U.download ? '<a href="https://cdn.jsdelivr.net/npm/files.photo.gallery@' + o + '/index.php" class="dropdown-item" download>' + P.get_svg_icon("download") + '<span class="dropdown-text" data-lang="download">' + X.get("download") + "</span></a>" : "") + '<a href="https://files.photo.gallery/latest" class="dropdown-item" target="_blank">' + P.get_svg_icon("info") + '<span class="dropdown-text" data-lang="read more">' + X.get("read more") + "</span></a></div></div>");
+                        _id("change-sort").insertAdjacentHTML("afterend", '<div id="files-notifications" class="dropdown"><button type="button" class="btn-icon btn-topbar">' + P.get_svg_icon("bell") + '</button><div class="dropdown-menu dropdown-menu-topbar"><h6 class="dropdown-header">Files ' + o + "</h6>" + (i.writeable ? '<button class="dropdown-item">' + P.get_svg_icon("rotate_right") + '<span class="dropdown-text" data-lang="update">' + X.get("update") + "</span></button>" : "") + (U.download ? '<a href="./_files/assets/js/lib/npm/files.photo.gallery@' + o + '/index.php" class="dropdown-item" download>' + P.get_svg_icon("download") + '<span class="dropdown-text" data-lang="download">' + X.get("download") + "</span></a>" : "") + '<a href="https://files.photo.gallery/latest" class="dropdown-item" target="_blank">' + P.get_svg_icon("info") + '<span class="dropdown-text" data-lang="read more">' + X.get("read more") + "</span></a></div></div>");
                         var l = _id("files-notifications");
                         if (P.dropdown(l, l.firstChild), !i.writeable) return;
                         y(l.children[1].children[1], (function() {

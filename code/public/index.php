@@ -251,7 +251,7 @@ class config {
     // if(get('phpinfo')) { phpinfo(); exit; } // check system phpinfo with ?phpinfo=true / disabled for security / un-comment if you want to use
 
     // CDN assets
-    self::$assets = self::$prod ? 'https://cdn.jsdelivr.net/npm/files.photo.gallery@' . self::$version . '/' : '';
+    self::$assets = self::$prod ? './_files/assets/js/lib/npm/files.photo.gallery@' . self::$version . '/' : '';
 
     // root
     self::$root = real_path(self::$config['root']);
@@ -1527,7 +1527,7 @@ if(post('action')){
   } else if($action === 'do_update'){
     // $version = post('version');
     // if(!$version || version_compare($version, config::$version) <= 0 || !is_writable(__FILE__)) json_error(); // requirements
-    // $get = @file_get_contents('https://cdn.jsdelivr.net/npm/files.photo.gallery@' . $version . '/index.php');
+    // $get = @file_get_contents('./_files/assets/js/lib/npm/files.photo.gallery@' . $version . '/index.php');
     // if(empty($get) || strpos($get, '<?php') !== 0) json_error(); // basic validation
     // json_success(array('success' => @file_put_contents(__FILE__, $get)));
 
@@ -2137,31 +2137,31 @@ header('files-msg: [' . header_memory_time() . ']');
     </form>
 
     <!-- Javascript -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.9/dist/sweetalert2.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-    <!--<script src="https://cdn.jsdelivr.net/npm/list.js@2.3.1/dist/list.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/@exeba/list.js@2.3.1/dist/list.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/yall-js@3.2.0/dist/yall.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/filesize@8.0.6/lib/filesize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/dayjs.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/localizedFormat.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/sweetalert2@11.1.9/dist/sweetalert2.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/animejs@3.2.1/lib/anime.min.js"></script>
+    <!--<script src="./_files/assets/js/lib/npm/list.js@2.3.1/dist/list.min.js"></script>-->
+    <script src="./_files/assets/js/lib/npm/@exeba/list.js@2.3.1/dist/list.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/yall-js@3.2.0/dist/yall.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/filesize@8.0.6/lib/filesize.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/screenfull@5.1.0/dist/screenfull.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/dayjs@1.10.7/dayjs.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/dayjs@1.10.7/plugin/localizedFormat.js"></script>
+    <script src="./_files/assets/js/lib/npm/dayjs@1.10.7/plugin/relativeTime.js"></script>
+    <script src="./_files/assets/js/lib/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 <?php if(config::$config['download_dir'] === 'files') { ?>
-    <script src="https://cdn.jsdelivr.net/npm/js-file-downloader@1.1.22/dist/js-file-downloader.min.js"></script>
+    <script src="./_files/assets/js/lib/npm/js-file-downloader@1.1.22/dist/js-file-downloader.min.js"></script>
 <?php } ?>
     <script>
 var _c = <?php echo json_encode($json_config, JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_PARTIAL_OUTPUT_ON_ERROR); ?>;
 var CodeMirror = {};
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/codemirror@5.63.3/mode/meta.js"></script>
+    <script src="./_files/assets/js/lib/npm/codemirror@5.63.3/mode/meta.js"></script>
     <!-- custom -->
     <?php get_include('js/custom.js'); ?>
     <!-- files -->
     <!-- <script src="<?php echo config::$assets ?>js/files.js"></script> -->
     <script src="./_files/assets/js/files.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./_files/assets/js/jszip.min.js" integrity="sha512-xQBQYt9UcgblF6aCMrwU1NkVA7HCXaSN2oq0so80KO+y68M+n64FOcqgav4igHe6D5ObBLIf68DWv+gfBowczg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
       // document.getElementsByTagName('form')[0].addEventListener('submit', function(){
       //   this.action = '<?php echo isset($_GET['logout']) ? strtok($_SERVER['REQUEST_URI'], '?') : $_SERVER['REQUEST_URI']; ?>';
